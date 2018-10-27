@@ -1,0 +1,29 @@
+.posts-container {
+  height: 0px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 2.5em 0;
+  font-size: 1.5em;
+  overflow: auto;
+}
+
+.posts-container__button {
+  flex-shrink: 0;
+  display: flex;
+  margin-top: 0.5em;
+  padding: 0 0.5em;
+  height: 2em;
+  align-self: center;
+  border: 1px solid #05386B;
+  border-radius: 0.4em;
+  transition: all .5s;
+}
+
+.posts-container__button:hover {
+  cursor: pointer;
+  border: 1px solid transparent;
+  background-color: #05386B;
+  color: #EDF5E1;
+}

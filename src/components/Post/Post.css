@@ -1,0 +1,23 @@
+.post {
+  flex-shrink: 0;
+  padding: 0.4em;
+}
+
+.post.even, 
+.post__comment.even {
+  background-color: #379683;
+}
+
+.post.odd, 
+.post__comment.odd {
+  background-color: #8EE4AF
+}
+
+.post__title:hover,
+.post__body:hover {
+  cursor: pointer;
+}
+
+.post__comment {
+  margin: 0.5em 0 0.5em 1em;
+}

@@ -21,3 +21,8 @@
 .post__comment {
   margin: 0.5em 0 0.5em 1em;
 }
+
+.post__comment--loading {
+  height: 10em;
+  text-align: center;
+}

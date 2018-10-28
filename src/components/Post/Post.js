@@ -4,21 +4,19 @@ import './Post.css'
 
 class Post extends React.PureComponent {
   state = {
-    showComments: false    
+    showComments: false,
+    comments: []
   };
-  comments = [];
 
   handleClick = () => {
-    if (!this.comments.length) {
+    if (!this.state.comments.length) {
       fetch(`https://jsonplaceholder.typicode.com/comments?postId=${this.props.id}`)
         .then((response) => response.json())
         .then((comments) => {
-          this.comments = comments;
-          this.togglePost();
+          this.setState({comments});
         });
-    } else {
-      this.togglePost();
     }
+    this.togglePost();
   }
 
   togglePost = () => {
@@ -34,6 +32,33 @@ class Post extends React.PureComponent {
     ].join(' ');
   }
 
+  renderComments = () => {
+    const { comments, showComments } = this.state;
+
+    if (!showComments) {
+      return null;
+    }
+
+    const isFetchingComments = !comments.length; 
+    if (isFetchingComments) {
+      return <div className="post__comment--loading">Loading...</div>
+    }
+
+    return (
+      comments.map(({ id, name, email, body }, index) => (
+        <div 
+          className={this.getClassName('post__comment', index)} 
+          key={id}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="comment__name">Name: {name}</div>
+          <div className="comment__email">Email: {email}</div>
+          <div className="comment__body">Body: {body}</div>
+        </div>
+      ))
+    );
+  }
+
   render() {
     const { title, body, index } = this.props;
 
@@ -45,19 +70,7 @@ class Post extends React.PureComponent {
         <div className="post__title">{`title: ${title}`}</div>
         <div className="post__body">{`body: ${body}`}</div>
 
-        {this.state.showComments &&
-          this.comments.map(({ id, name, email, body }, index) => (
-            <div 
-              className={this.getClassName('post__comment', index)} 
-              key={id}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="comment__name">Name: {name}</div>
-              <div className="comment__email">Email: {email}</div>
-              <div className="comment__body">Body: {body}</div>
-            </div>
-          ))
-        }
+        {this.renderComments()}
       </div>
     );
   }
